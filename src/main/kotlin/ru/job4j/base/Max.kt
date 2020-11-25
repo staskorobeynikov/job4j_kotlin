@@ -2,10 +2,7 @@ package ru.job4j.base
 
 fun max(first: Int, second: Int) = if (first > second) first else second
 
-fun max(first: Int, second:Int, third: Int): Int {
-    val temp = if (first > second) first else second
-    return if (temp > third) temp else third
-}
+fun max(first: Int, second:Int, third: Int): Int = max(first, max(second, third))
 
 fun main() {
     val rsl = max(1, 2)
