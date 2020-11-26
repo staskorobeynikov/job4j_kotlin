@@ -6,8 +6,7 @@ fun draw(size: Int) {
         for (j in 0 until size) {
             if (i == j) {
                 print("\\")
-            }
-            else if (i + j == size - 1) {
+            } else if (i + j == size - 1) {
                 print("/")
             } else {
                 print(" ")
