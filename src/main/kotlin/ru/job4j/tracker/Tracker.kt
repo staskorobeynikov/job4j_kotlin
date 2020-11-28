@@ -6,7 +6,7 @@ class Tracker {
     private var size: Int = 0
 
     fun add(item: Item): Item {
-        item.setId(ids++)
+        item.id = ids++
         items[size++] = item
         return item
     }
@@ -17,7 +17,7 @@ class Tracker {
 
     private fun indexOf(id: Int): Int {
         for (i in items.indices) {
-            if (items[i]?.getId() == id) {
+            if (items[i]?.id == id) {
                 return i
             }
         }
@@ -33,7 +33,7 @@ class Tracker {
         val index = indexOf(id)
         val rsl = index != -1
         if (rsl) {
-            item.setId(id)
+            item.id = id
             items[index] = item
         }
         return rsl
@@ -55,7 +55,7 @@ class Tracker {
         var index = 0
         for (i in 0 until size) {
             val item: Item? = items[i]
-            if (item?.getName() == name) {
+            if (item?.name == name) {
                 rsl[index++] = item
             }
         }
