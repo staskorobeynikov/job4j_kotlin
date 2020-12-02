@@ -1,34 +1,30 @@
 package ru.job4j.tracker
 
-import java.util.*
-
 object StartUI {
-    fun init(input: Scanner, store: Tracker) {
+    fun init(input: Input, store: Tracker, actions: Array<Action>) {
         var run = true
         while (run) {
             printMenu()
-            println("Введите пункт меню...")
-            val check: Int = input.nextInt()
-            if (check == 1) {
-                UserAction.addItem(input, store)
-            } else if (check == 2) {
-                UserAction.getAll(store)
-            } else if (check == 3) {
-                run = UserAction.exit()
-            }
+            val check: Int = Integer.parseInt(input.ask("Введите пункт меню..."))
+            run = actions[check].execute(store, input)
         }
     }
 
     private fun printMenu() {
         println("Меню приложения: ")
-        println("1 - Добавить заявку")
-        println("2 - Найти все заявки")
-        println("3 - Выход")
+        println("0 - Добавить заявку")
+        println("1 - Найти все заявки")
+        println("2 - Выход")
     }
 }
 
 fun main() {
-    val input = Scanner(System.`in`)
-    val store = Tracker()
-    StartUI.init(input, store)
+    val input = ConsoleInput()
+    val tracker = Tracker()
+    val actions: Array<Action> = arrayOf(
+        AddAction(),
+        FindAllAction(),
+        ExitAction()
+    )
+    StartUI.init(input, tracker, actions)
 }
