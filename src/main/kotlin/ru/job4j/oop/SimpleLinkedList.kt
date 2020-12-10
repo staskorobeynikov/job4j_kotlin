@@ -34,6 +34,58 @@ class SimpleLinkedList<T> : Iterable<T> {
     }
 
     class Node<K>(val value: K, var next: Node<K>? = null)
+
+    fun listIterator(): ListIterator<T> {
+        return ListItr()
+    }
+
+    inner class ListItr : ListIterator<T> {
+        private var lastNext: Node<T>? = head
+
+        private var previous: Node<T>? = null
+
+        private var nextPrevious: Node<T>? = null
+
+        private var nextIndex: Int = 0
+
+        override fun hasNext(): Boolean {
+            return lastNext != null
+        }
+
+        override fun hasPrevious(): Boolean {
+            return previous != null
+        }
+
+        override fun next(): T {
+            if (!hasNext()) {
+                throw NoSuchElementException()
+            }
+            val rsl = lastNext!!.value
+            if (previous != null) nextPrevious = previous
+            previous = lastNext
+            lastNext = lastNext?.next
+            nextIndex++
+            return rsl
+        }
+
+        override fun nextIndex(): Int {
+            return nextIndex
+        }
+
+        override fun previous(): T {
+            if (!hasPrevious()) {
+                throw NoSuchElementException()
+            }
+            val rsl = previous!!.value
+            lastNext = previous
+            nextIndex--
+            return rsl
+        }
+
+        override fun previousIndex(): Int {
+            return nextIndex - 1
+        }
+    }
 }
 
 fun main() {
@@ -47,4 +99,8 @@ fun main() {
     for (value in list) {
         println(value)
     }
+    val listIterator = list.listIterator()
+    println(listIterator.hasPrevious())
+    listIterator.next()
+    println(listIterator.previous())
 }
