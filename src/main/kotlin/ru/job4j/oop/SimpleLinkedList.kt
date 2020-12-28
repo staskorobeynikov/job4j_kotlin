@@ -2,14 +2,16 @@ package ru.job4j.oop
 
 class SimpleLinkedList<T> : Iterable<T> {
     private var head : Node<T>? = null
+    private var last : Node<T>? = null
 
     fun add(value: T) {
-        val newNode = Node(value)
-        if (head != null) {
-            newNode.next = head
-            head = newNode
+        val tmp = head
+        val newNode = Node(null, value, tmp)
+        head = newNode
+        if (tmp == null) {
+            last = newNode
         } else {
-            head = newNode
+            tmp.prev = newNode
         }
     }
 
@@ -33,7 +35,7 @@ class SimpleLinkedList<T> : Iterable<T> {
         }
     }
 
-    class Node<K>(val value: K, var next: Node<K>? = null)
+    class Node<K>(var prev: Node<K>? = null, val value: K, var next: Node<K>? = null)
 
     fun listIterator(): ListIterator<T> {
         return ListItr()
@@ -42,10 +44,6 @@ class SimpleLinkedList<T> : Iterable<T> {
     inner class ListItr : ListIterator<T> {
         private var lastNext: Node<T>? = head
 
-        private var previous: Node<T>? = null
-
-        private var nextPrevious: Node<T>? = null
-
         private var nextIndex: Int = 0
 
         override fun hasNext(): Boolean {
@@ -53,7 +51,7 @@ class SimpleLinkedList<T> : Iterable<T> {
         }
 
         override fun hasPrevious(): Boolean {
-            return previous != null
+            return nextIndex > 0
         }
 
         override fun next(): T {
@@ -61,8 +59,6 @@ class SimpleLinkedList<T> : Iterable<T> {
                 throw NoSuchElementException()
             }
             val rsl = lastNext!!.value
-            if (previous != null) nextPrevious = previous
-            previous = lastNext
             lastNext = lastNext?.next
             nextIndex++
             return rsl
@@ -76,10 +72,9 @@ class SimpleLinkedList<T> : Iterable<T> {
             if (!hasPrevious()) {
                 throw NoSuchElementException()
             }
-            val rsl = previous!!.value
-            lastNext = previous
+            lastNext = if (lastNext == null) last else lastNext?.prev
             nextIndex--
-            return rsl
+            return lastNext!!.value
         }
 
         override fun previousIndex(): Int {
@@ -89,7 +84,7 @@ class SimpleLinkedList<T> : Iterable<T> {
 }
 
 fun main() {
-    val node = SimpleLinkedList.Node<String>("Kotlin")
+    val node = SimpleLinkedList.Node(null, "Kotlin")
     println(node.value)
     println()
     val list = SimpleLinkedList<String>()
