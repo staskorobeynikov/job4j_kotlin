@@ -6,7 +6,7 @@ import java.util.*
 
 internal class UsageMapMethodKtTest : StringSpec ({
     "Test method for change Data" {
-        val list: List<Campaign> = listOf(
+        val list = listOf(
             Campaign("Holms Corporated", Address(
                 "London", "Baker Street", 1
             ), Date(1)
@@ -20,7 +20,7 @@ internal class UsageMapMethodKtTest : StringSpec ({
             ), Date(1)
             )
         )
-        val expected: List<String> = listOf(
+        val expected = listOf(
             Campaign("Holms Corporated", Address(
                 "London", "Baker Street", 1
             ), Date(1)

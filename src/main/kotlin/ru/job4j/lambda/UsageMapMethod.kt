@@ -7,7 +7,7 @@ fun changeData(list: List<Campaign>): List<String> {
 }
 
 fun main() {
-    val list: List<Campaign> = listOf(
+    val list = listOf(
         Campaign("Holms Corporated", Address(
             "London", "Baker Street", 1
         ), Date(1)),
