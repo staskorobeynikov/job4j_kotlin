@@ -4,17 +4,17 @@ object StartUI {
     fun init(input: Input, store: Tracker, actions: Array<Action>) {
         var run = true
         while (run) {
-            printMenu()
-            val check: Int = Integer.parseInt(input.ask("Введите пункт меню..."))
+            printMenu(actions)
+            val check = Integer.parseInt(input.ask("Введите пункт меню..."))
             run = actions[check].execute(store, input)
         }
     }
 
-    private fun printMenu() {
+    private fun printMenu(actions: Array<Action>) {
         println("Меню приложения: ")
-        println("0 - Добавить заявку")
-        println("1 - Найти все заявки")
-        println("2 - Выход")
+        for (i in actions.indices) {
+            println(i.toString() + ". " + actions[i].name())
+        }
     }
 }
 

@@ -1,6 +1,10 @@
 package ru.job4j.tracker
 
 class FindAllAction : Action {
+    override fun name(): String {
+        return "Find all Items"
+    }
+
     override fun execute(tracker: Tracker, input: Input): Boolean {
         println("Все заявки в хранилище: ")
         val all = tracker.findAll()
